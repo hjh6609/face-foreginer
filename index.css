@@ -268,8 +268,8 @@ body {
 }
 
 
-/* 
-.loading-section{
-  padding: 55% 55%;
-} */
-
+.footer2{
+  width:100%;
+  text-align: center;
+  color:rgb(73, 73, 73);
+}
