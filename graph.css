@@ -1,0 +1,115 @@
+body {
+  font-family: 'pt sans';
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/*
+=================
+Circle Graph using (https://github.com/rendro/easy-pie-chart)
+================
+*/
+.circle-graph p {
+	text-align: center;
+  padding: 10px;
+  z-index: 100;
+} 
+
+.graph-one {
+  height: 300px; /* set height for postioning */
+}
+
+circle-graph-container {
+  position: relative;
+}
+
+canvas {
+  position: absolute;
+  top: 120px;
+}
+
+.circle-graph {
+	margin: 20px;
+  float: left;
+}
+
+/*
+=================
+Bar Graph 
+================
+*/
+.bar-graph-container {
+  border-left: 2px solid rgb(136, 131, 131);
+  border-bottom: 2px solid rgb(136, 131, 131); 
+  width: 100%;
+  overflow: hidden;
+  color: #fff;
+  font-weight: bold;
+  padding: 2%;
+}
+
+
+@-webkit-keyframes slide-left {
+   0% {
+     -webkit-transform: translateX(-200%);
+  }
+  70% {
+    -webkit-transform: translateX(2%);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    -webkit-transform: translateX(-200%);
+  }
+  
+  70% {
+    -webkit-transform: translateX(2%);
+  }
+  
+  100% {
+    -webkit-transform: translateX(0);
+  }
+}
+
+.bar-container {
+ 	background-color: rgba(231, 184, 239, 0.6); 
+  display: flex;  
+}
+
+.usa {
+  /* width: 82%; */
+  background-color: #79627c;
+  animation: slide-left 0.9s ease-in-out 1s both;
+  -webkit-animation: slide-left 0.9s ease-in-out 1s both;
+  animation-delay: 0.1s;
+  -webkit-animation-delay: 0.1s;
+}
+
+.europe {
+  /* width: 18%; */
+  background-color: #79627c;
+  animation: slide-left 1s ease-in-out 1s both;
+ -webkit-animation: slide-left 1s ease-in-out 1s both;
+   animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+}
+
+.asia {
+  /* width: 1%; */
+  background-color: #79627c;
+  animation: slide-left 1s ease-in-out 1s both;
+  -webkit-animation: slide-left 1s ease-in-out 1s both;
+   animation-delay: 0.3s;
+  -webkit-animation-delay: 0.3s;
+}
+
+.graph-two{
+  padding: 5% 5% 6%;
+}

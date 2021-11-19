@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" sizes="16x16">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="graph.css" />
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-61952c0d448738f4"></script>
+    <title>jjame-test</title>
+    <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+</head>
+
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light nav-distance">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">쨈있는 테스트</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="#">Main</a>
+                    <a class="nav-link" href="#">Other test</a>
+                    <a class="nav-link" href="#">Blog</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="section">
+        <h1 class="title">나 어 닮 테스트</h1>
+        <h2 class="stitle">나는 어떤 나라 사람을 닮았을까?</h2>
+    </section>
+    <section class="subtitle">
+        <a href="/" style="text-decoration:none">
+            <h1 class="blog container mt-3 d-flex flex-row-reverse align-items-center">Swisscottage Blog</h1>
+        </a>
+    </section>
+    <div class="file-upload">
+        <div class="image-upload-wrap">
+            <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+            <div class="drag-text">
+                <h3 style="color: rgb(136, 199, 178);">얼굴 인식이 잘 되는 사진을 업로드 혹은 드레그 해주세요!</h3>
+            </div>
+        </div>
+        <div class="file-upload-content">
+            <img class="file-upload-image" id="face-image" src="#" alt="your image" />
+            <p class="resultMessage"></p>
+            <div id="loading">
+                <img id="loading-image" src="loading_.gif" alt="Loading..." />
+            </div>
+            <div id="label-container" style="display:none"></div>
+            <!-- Graph-->
+            <div class="container" id="g-container" style="display:none">
+                <section class="graph-two">
+                    <div class="bar-graph-container">
+                        <div class="bar-container">
+                            <div class="usa" id="usa"></div>
+                            <div class="perSant1" style="padding: 0% 20%;"></div>
+                        </div>
+
+                        <div class="bar-container">
+                            <div class="europe"></div>
+                            <span class="perSant2" style="padding: 0% 20%;"></span>
+                        </div>
+
+                        <div class="bar-container">
+                            <div class="asia"></div>
+                            <span class="perSant3" style="padding: 0% 20%;"></span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- //////Graph-->
+            <div class="image-title-wrap">
+
+                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                <div class="addthis_inline_share_toolbox"></div>
+
+                <!-- <button type="button" onclick="removeUpload()" class="remove-image">Remove <span
+                        class="image-title">Uploaded Image</span></button> -->
+                <button type="button" onclick="removeUpload()" class="remove-image">다시하기</button>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="webcam-container"></div>
+
+    <section class="footer">
+        <h1 class="footer">사진은 절대 저장 되지 않아요! 걱정 ㄴㄴ</h1>
+    </section>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+    <script>
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.image-upload-wrap').hide();
+                    $('.file-upload-image').attr('src', e.target.result);
+                    $('.file-upload-content').show();
+                    $('.image-title').html(input.files[0].name);
+                };
+                reader.readAsDataURL(input.files[0]);
+
+                init().then(() => {
+                    console.log("aa");
+                    $(window).load();
+                    predict();
+                    $('#loading').hide();
+                });
+            } else {
+                removeUpload();
+            }
+        }
+
+        function removeUpload() {
+            location.reload();
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.image-upload-wrap').show();
+        }
+        $('.image-upload-wrap').bind('dragover', function () {
+            $('.image-upload-wrap').addClass('image-dropping');
+        });
+        $('.image-upload-wrap').bind('dragleave', function () {
+            $('.image-upload-wrap').removeClass('image-dropping');
+        });
+    </script>
+    <script type="text/javascript">
+        // More API functions here:
+        // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+        // the link to your model provided by Teachable Machine export panel
+        const URL = "https://teachablemachine.withgoogle.com/models/oO7_JQ3hu/";
+        let model, webcam, labelContainer, maxPredictions;
+        // Load the image model and setup the webcam
+        async function init() {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+            // load the model and metadata
+            // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+            // or files from your local hard drive
+            // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) { // and class labels
+                labelContainer.appendChild(document.createElement("div"));
+            }
+        }
+        // run the webcam image through the image model
+        async function predict() {
+            // predict can take in an image, video or canvas html element
+            var image = document.getElementById("face-image")
+            const prediction = await model.predict(image, false);
+            prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+            console.log(prediction[0].probability);
+
+            var predict111 = prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+
+            if (predict111) {
+                var step;
+                for (step = 0; step < 3; step++) {
+                    $('.' + predict111[step].className).width(Math.ceil(predict111[step].probability * 100) + "%");
+
+                    //jason incoding
+                    //let json = JSON.stringify(student);  JSON.stringify(meetup, ['title', 'participants']) 
+                    //let json = JSON.stringify(predict111[step].className); 
+                    //console.log(json);
+
+                    //$('.bar-container').addClass(json);
+                    // var step2
+                    // for(step2 = 0; step2 <2; step2 ++){
+                    //     var json = JSON.stringify(predict111[step].className); 
+                    //     var character = json.replace(/\"/gi, "");
+                    //     var test = $('.bar-container').addClass(character);
+                    //     console.log(test);
+                    // }
+
+                    if (predict111[step].className === "USA") {
+                        console.log(Math.ceil(predict111[step].probability * 100) + "%");
+                        $('.usa').width(Math.ceil(predict111[step].probability * 100) + "%");
+                        $('.usa').html("USA");
+                        $('.perSant1').html(Math.ceil(predict111[step].probability * 100) + "%");
+                    }
+
+                    if (predict111[step].className === "Europe") {
+                        console.log(Math.ceil(predict111[step].probability * 100) + "%");
+                        $('.europe').width(Math.ceil(predict111[step].probability * 100) + "%");
+                        $('.europe').html("Europe");
+                        $('.perSant2').html(Math.ceil(predict111[step].probability * 100) + "%");
+                    }
+
+                    if (predict111[step].className === "ASIA") {
+                        console.log(Math.ceil(predict111[step].probability * 100) + "%");
+                        $('.asia').width(Math.ceil(predict111[step].probability * 100) + "%");
+                        $('.asia').html("ASIA");
+                        $('.perSant3').html(Math.ceil(predict111[step].probability * 100) + "%");
+                    }
+
+                    //$('.perSant').html(Math.ceil(predict111[step].probability*100) + "%");
+                    $('#g-container').show();
+
+                }
+
+            }
+
+
+            var message;
+            switch (prediction[0].className === "USA") {
+                case "USA":
+                    message = "당신은 미국인을 가장 많이 닮았습니다!"
+                    break;
+                // case "Europe":
+                //     message = "당신은 유럽인을 가장 많이 닮았습니다!"
+                //     break;
+                // case "ASIA":
+                //     message = "당신은 아시아인을 가장 많이 닮았습니다!"
+                //     break;
+                default:
+                    message = "당신은 ....!"
+                    break;
+            }
+            if (prediction[0].className === "ASIA") {
+                console.log("111");
+                var name = Math.floor(Math.random() * 2);
+                switch (name) {
+                    case 0:
+                        message = "당신은 일본인을 가장 많이 닮았습니다! 캬악 일본 너무 좋아!!!! 완전 부러워요!!"
+                        break;
+                    case 1:
+                        message = "당신은 한국인을 가장 많이 닮았습니다! 캬악 한국 너무 좋아!!!! 완전 부러워요!!"
+                        break;
+                    case 2:
+                        message = "당신은 아시아인을 가장 많이 닮았습니다! 캬악 아시아 너무 좋아!!!! 완전 부러워요!!"
+                        break;
+                    default:
+                        message = "당신은 ....!"
+                        break;
+                }
+            }
+
+            if (prediction[0].className === "Europe") {
+                console.log("111");
+                var name = Math.floor(Math.random() * 4);
+                switch (name) {
+                    case 0:
+                        message = "당신은 영국인을 가장 많이 닮았습니다! 캬악 영국 너무 좋아!!!! 완전 부러워요!!"
+                        break;
+                    case 1:
+                        message = "당신은 독일인을 가장 많이 닮았습니다! 캬악 독일 너무 좋아!!!! 완전 부러워요!!"
+                        break;
+                    case 2:
+                        message = "당신은 프랑스인을 가장 많이 닮았습니다! 캬악 프랑스 너무 좋아!!!! 완전 부러워요!!"
+                        break;
+                    case 3:
+                        message = "당신은 스웨덴인을 가장 많이 닮았습니다! 캬악 스웨덴 너무 좋아!!!! 완전 부러워요!!"
+                        break;
+                    case 4:
+                        message = "당신은 네덜란드인을 가장 많이 닮았습니다! 캬악 네덜란드 너무 좋아!!!! 완전 부러워요!!"
+                        break;
+                    default:
+                        message = "당신은 ....!"
+                        break;
+                }
+            }
+
+            $('.resultMessage').html(message);
+
+
+            for (let i = 0; i < maxPredictions; i++) {
+                const classPrediction =
+                    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+                labelContainer.childNodes[i].innerHTML = classPrediction;
+
+            }
+
+        }
+    </script>
+
+</body>
+<!-- Copyright (c) 2021 by Aaron Vanston (https://codepen.io/aaronvanston/pen/yNYOXR)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. -->
+
+<!-- Copyright (c) 2021 by Hannah (https://codepen.io/Han/pen/kflHF)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. -->
+
+
+</html>
